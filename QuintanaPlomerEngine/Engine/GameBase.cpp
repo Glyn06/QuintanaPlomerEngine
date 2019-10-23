@@ -4,6 +4,7 @@
 
 GameBase::GameBase()
 {
+	glfwInit();
 }
 
 

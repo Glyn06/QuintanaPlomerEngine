@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\Win32</OutDir>
-    <IntDir>$(SolutionDir)obj\Win32</IntDir>
+    <OutDir>$(SolutionDir)bin\Win32\</OutDir>
+    <IntDir>$(SolutionDir)obj\Win32\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\Win32</OutDir>
-    <IntDir>$(SolutionDir)obj\Win32</IntDir>
+    <OutDir>$(SolutionDir)bin\Win32\</OutDir>
+    <IntDir>$(SolutionDir)obj\Win32\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\Win64</OutDir>
@@ -95,7 +95,11 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\EngineDLL\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\EngineDLL\lib\Win32\Engine.dll" "$(OutDir)" /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -124,7 +128,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\EngineDLL\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy "$(SolutionDir)libs\EngineDLL\lib\Win32\Engine.dll" "$(OutDir)" /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

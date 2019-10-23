@@ -1,5 +1,7 @@
 #pragma once
-class GameBase
+#include "Window.h"
+#define QP_API _declspec(dllexport)
+class QP_API GameBase
 {
 public:
 	GameBase();
