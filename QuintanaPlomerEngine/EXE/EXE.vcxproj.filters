@@ -15,15 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="EXE.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
