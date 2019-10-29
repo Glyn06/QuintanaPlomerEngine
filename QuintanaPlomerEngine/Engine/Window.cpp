@@ -11,6 +11,8 @@ Window::Window(int width, int height, const char *title)
 		glfwTerminate();
 	}
 	glfwMakeContextCurrent(_w);
+
+	glViewport(0, 0, width, height);
 }
 
 
