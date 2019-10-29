@@ -9,5 +9,7 @@ public:
 	GameBase();
 	~GameBase();
 	void GameLoop();
+protected:
+	void SetClearColor(float r, float g, float b, float a);
 };
 
