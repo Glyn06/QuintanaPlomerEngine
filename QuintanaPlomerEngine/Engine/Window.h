@@ -1,7 +1,10 @@
-#pragma once
+#ifndef WINDOW_H
+#define WINDOW_H
+
 #include <iostream>
 using namespace std;
 #include "glfw3.h"
+
 class Window
 {
 private:
@@ -11,4 +14,6 @@ public:
 	~Window();
 	GLFWwindow* GetWindow() { return _w; };
 };
+
+#endif // !WINDOW_H
 
