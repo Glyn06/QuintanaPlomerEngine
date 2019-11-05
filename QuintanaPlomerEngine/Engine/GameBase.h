@@ -2,6 +2,7 @@
 #define GAMEBASE_H
 
 //input
+#include "Shape.h"
 #include "Window.h"
 
 #define QP_API _declspec(dllexport)

@@ -63,17 +63,17 @@ outColor = texture(ourTexture, textureCoords);
 }
 )glsl";
 //------------------------------ Shaders ------------------------------
-
+unsigned int VBO;
+unsigned int EBO;
+unsigned int VAO;
 
 Renderer::Renderer()
 {
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-
+	glewInit;
+	float* aux = shape->GetVertexBufferData();
+	int* aux2 = shape->GetIndexBufferData();
+	Bind(aux, aux2, sizeof(aux));
+	
 }
 
 
@@ -81,9 +81,56 @@ Renderer::~Renderer()
 {
 }
 
+void Renderer::Bind(float _vertex[],int _index[], int _arraySize)
+{
+	
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertex), _vertex, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_index), _index, GL_STATIC_DRAW);
 
 
+	LoadShaders(_vertex);
+	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
+	glEnableVertexAttribArray(posAttrib);
 
+	GLint colAttrib = glGetAttribLocation(shaderProgram, "triangleColor");
+	glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(colAttrib);
+
+	GLint texAttrib = glGetAttribLocation(shaderProgram, "textCoord");
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(texAttrib);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+
+void Renderer::LoadShaders(float _vertex[])
+{
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	glCompileShader(vertexShader);
+
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+	glCompileShader(fragmentShader);
+
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+
+	glBindFragDataLocation(shaderProgram, 0, "outColor");
+	glLinkProgram(shaderProgram);								//linkean el "programa"
+	glUseProgram(shaderProgram);
+}
 
 Window* Renderer::CreateWindow(int width, int height, const char *title)
 {

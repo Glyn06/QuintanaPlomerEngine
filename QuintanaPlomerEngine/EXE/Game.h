@@ -2,8 +2,11 @@
 #define GAME_H
 
 #include "GameBase.h"
+
 class Game : public GameBase
 {
+private:
+	//Shape* shape;
 public:
 	Game();
 	void Init();	//no hace falta override 

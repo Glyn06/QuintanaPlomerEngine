@@ -98,8 +98,13 @@
       <AdditionalDependencies>Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(SolutionDir)libs\EngineDLL\lib\Win32\Engine.dll" "$(OutDir)" /y</Command>
+      <Command>
+</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)libs\EngineDLL\lib\Win32\Engine.dll" "$(OutDir)" /y
+copy "$(SolutionDir)libs\GLEW\dll\glew32.dll" "$(OutDir)" /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

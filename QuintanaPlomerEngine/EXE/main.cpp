@@ -1,4 +1,4 @@
 #include "Game.h"
 void main() {
-	Game *g = new Game();
+	GameBase *g = new Game();
 }

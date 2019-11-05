@@ -14,10 +14,13 @@ GameBase::GameBase()
 	_window = _rend->CreateWindow(800, 600, "Yo!");		//Esto deberia llamarse desde Game
 	glfwSetFramebufferSizeCallback(_window->GetWindow(), framebuffer_size_callback);
 
+	Init();
 	//init
 	GameLoop();
 }
-
+void GameBase::Init()
+{
+}
 
 GameBase::~GameBase()
 {
