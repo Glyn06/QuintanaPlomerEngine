@@ -34,7 +34,6 @@ outColor = texture(ourTexture, textureCoords);
 //outColor = ourColor;
 }
 )glsl";*/
-
 const char* vertexSource = R"glsl(
     #version 330 core
 out vec4 ourColor;
@@ -55,24 +54,33 @@ const char* fragmentSource = R"glsl(
 out vec4 outColor;
 in vec4 ourColor;
 in vec2 textureCoords;
-uniform sampler2D ourTexture;
+//uniform sampler2D ourTexture;
 void main()
 {
-outColor = texture(ourTexture, textureCoords);
-//outColor = ourColor;
+//outColor = texture(ourTexture, textureCoords);
+outColor = ourColor;
 }
 )glsl";
 //------------------------------ Shaders ------------------------------
 unsigned int VBO;
 unsigned int EBO;
 unsigned int VAO;
-
+unsigned int ourTexture;
 Renderer::Renderer()
 {
-	glewInit;
-	float* aux = shape->GetVertexBufferData();
-	int* aux2 = shape->GetIndexBufferData();
-	Bind(aux, aux2, sizeof(aux));
+	
+	if(glewInit() != GLEW_OK)
+	{
+		printf("glew error");
+	}
+
+	float* vertex = shape->GetVertexBufferData();
+	int* index = shape->GetIndexBufferData();
+	int vertexSize = shape->GetBufferSize(0);
+	int indexSize = shape->GetBufferSize(1);
+	
+	Bind(vertex, index, vertexSize, indexSize);
+	
 	
 }
 
@@ -81,19 +89,21 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::Bind(float _vertex[],int _index[], int _arraySize)
+void Renderer::Bind(GLfloat _vertex[],GLint _index[], int _vertexSize, int _indexSize)
 {
+	
+	//printf("_vertex: %f" + _vertex[0]);
 	
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertex), _vertex, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertexSize, _vertex, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_index), _index, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexSize, _index, GL_STATIC_DRAW);
 
 
 	LoadShaders(_vertex);
@@ -112,7 +122,34 @@ void Renderer::Bind(float _vertex[],int _index[], int _arraySize)
 	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 }
+/*
+void Renderer::LoadTexture()
+{
+	glGenTextures(1, &ourTexture);
+	glBindTexture(GL_TEXTURE_2D, ourTexture);
 
+	// set the texture wrapping/filtering options (on the currently bound texture object)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);		//LINEAR
+	unsigned char *data = shape->GetSprite();
+	int width = entity->GetWidth();
+	int height = entity->GetHeight();
+	if (data)
+	{
+		printf("loaded texture correctly\n");
+		printf("Width: %i \n", width);
+		printf("Height: %i \n", height);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		printf("Failed to load texture \n");
+	}
+
+}*/
 void Renderer::LoadShaders(float _vertex[])
 {
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);

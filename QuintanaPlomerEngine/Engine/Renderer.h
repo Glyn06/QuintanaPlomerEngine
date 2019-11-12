@@ -18,8 +18,9 @@ private:
 public:
 	Renderer();
 	~Renderer();
-	void Bind(float _vertex[], int _index[], int _arraySize);
-	void LoadShaders(float _vertex []);
+	void Bind(GLfloat _vertex[], GLint _index[], int _vertexSize, int _indexSize);
+	//void LoadTexture();
+	void LoadShaders(float _vertex[]);
 	Window* CreateWindow(int width, int height, const char *title);
 	void SwapBuffers(Window*);
 	void SetClearColor(float r, float g, float b, float a);

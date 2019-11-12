@@ -1,26 +1,21 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
-
+#include <iostream>
 using namespace std;
 class Shape
 {
 private:
-	float VertexSquare[32] = {	//vertex buffer
-	 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f,		// Vertex 1 (X, Y, COLOR RGBA, TEXTURE COORDS XY) 0
-	 0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,		// Vertex 2 (X, Y, COLOR RGBA, TEXTURE COORDS XY) 1
-	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,	// Vertex 3 (X, Y, COLOR RGBA, TEXTURE COORDS XY) 2
-	-0.5f, 0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f,	// Vertex 4 (X, Y, COLOR RGBA, TEXTURE COORDS XY) 3
-	};
-	int IndexSquare[6] = {	//index buffer
-	0 , 1, 2,		// tirangulo derecho inferior
-	2, 3, 0
-	};
+	
 	int width, height, nrChannels;
 public:
+
+	//we need the code i have, that works, but we also need animation
 	Shape();
 	float* GetVertexBufferData();
 	int* GetIndexBufferData();
+	int GetBufferSize(int i);
+	
 	//unsigned char* GetSprite();
 	int GetWidth();
 	int GetHeight();

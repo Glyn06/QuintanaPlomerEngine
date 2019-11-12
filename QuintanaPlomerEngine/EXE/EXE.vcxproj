@@ -99,7 +99,7 @@
     </Link>
     <PreBuildEvent>
       <Command>
-</Command>
+      </Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)libs\EngineDLL\lib\Win32\Engine.dll" "$(OutDir)" /y
